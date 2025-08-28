@@ -23,6 +23,7 @@ This repository is the official implementation of CODA.
 
 ## 👨‍💻 Todo
 - [ ] Training code of CODA based on OpenRLHF.
+- [ ] Release of JudgeModel finetuned on Qwen2.5-VL-72B.
 - [x] Inference code of CODA on ScienceBoard.
 - [x] Release of CODA-PLANER-TARS-32B.
 
@@ -35,7 +36,11 @@ pip install vllm==0.8.5.post1
 ```
 
 ## Inference
+Prepare [ScienceBoard](https://github.com/OS-Copilot/ScienceBoard) environment 
+replace `sci` folder in ScienceBoard with our `ScienceBoard_CODA/sci` and put `qwenvl_test.py` under ScienceBoard base folder.
+
 ```shell
+# use conda (vllm==0.8.5.post1) to deploy model to reproduce our results.
 # deploy CODA-PLANER-TARS-32B
 vllm serve OpenIXCLab/CODA-PLANNER-TARS-32B \
     --served-model-name "qwen32b" \
@@ -50,6 +55,7 @@ CUDA_VISIBLE_DEVICES=4,5 vllm serve ByteDance-Seed/UI-TARS-1.5-7B \
     --port "${PORT_2}" \
     --tensor-parallel-size 2 &
 
+# in sciboard env, perform agent evaluation.
 export SOFTWARE='Celestia'
 export SUBFOLDER="planner_ans"
 export DEBUG_LOG=0
@@ -81,8 +87,8 @@ echo "All tasks completed."
 
 ```
 
-## Acknowledgements
-We sincerely thank [UI-TARS](https://github.com/bytedance/UI-TARS), [OSWorld](https://github.com/xlang-ai/OSWorld), [R1-V](https://github.com/Deep-Agent/R1-V), [DeepSeek](https://github.com/deepseek-ai/DeepSeek-R1), [Open-R1](https://github.com/huggingface/open-r1), [QwenVL](https://github.com/QwenLM/Qwen2.5-VL), for providing open source resources and to build the project.
+<!-- ## Acknowledgements
+We sincerely thank [UI-TARS](https://github.com/bytedance/UI-TARS), [OSWorld](https://github.com/xlang-ai/OSWorld), [R1-V](https://github.com/Deep-Agent/R1-V), [DeepSeek](https://github.com/deepseek-ai/DeepSeek-R1), [Open-R1](https://github.com/huggingface/open-r1), [QwenVL](https://github.com/QwenLM/Qwen2.5-VL), for providing open source resources and to build the project. -->
 
 ## ✒️ Citation
 ```

